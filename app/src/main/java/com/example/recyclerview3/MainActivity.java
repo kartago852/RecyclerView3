@@ -49,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
 
         public void mCrearCriterio(){
 
-            listadatos.add(""+i++);
+            listadatos.add( "" + i++ );
+
             AdapterCri adapter = new AdapterCri(listadatos);
             recyclerView.setAdapter(adapter);
         }
