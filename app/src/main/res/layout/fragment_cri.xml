@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1a237e">
+    <LinearLayout
+        android:id="@+id/mformulario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/mformcriterio"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:hint="Ingrese criterio">
+        </EditText>
+        <Button
+            android:id="@+id/mBtnIngresarCriterios"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ingrese criterios">
+        </Button>
+    </LinearLayout>
+
+</LinearLayout>
