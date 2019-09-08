@@ -9,13 +9,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    ArrayList<String> listadatos;
+    ArrayList<Criterios> listadatos;
     Button mbtncrearcriterios;
+    DatabaseReference mDatabase;
+    int x=0;
     int i=0;
 
     @Override
@@ -28,17 +33,18 @@ public class MainActivity extends AppCompatActivity {
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
-
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         // Lineas divisorias
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this,llm.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
-        listadatos = new ArrayList<String>();
+        listadatos = new ArrayList<>();
 
 
         mbtncrearcriterios.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                     mCrearCriterio();
 
             }
@@ -49,7 +55,9 @@ public class MainActivity extends AppCompatActivity {
 
         public void mCrearCriterio(){
 
-            listadatos.add( "" + i++ );
+
+            mDatabase.child( "Criterios" ).child( "Criterios N°"+ x++ ).setValue( "" );
+            listadatos.add( new Criterios() );
 
             AdapterCri adapter = new AdapterCri(listadatos);
             recyclerView.setAdapter(adapter);

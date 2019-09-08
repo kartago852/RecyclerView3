@@ -16,10 +16,13 @@ import java.util.ArrayList;
 
 public class AdapterCri extends RecyclerView.Adapter<AdapterCri.Viewholder>{
 
-    ArrayList<String> listadatos;
+    ArrayList<Criterios> listadatos;
     private DatabaseReference mDatabase;
+    Button mbtningresarcriterios;
+    EditText mformcriterio;
+    int x=0;
 
-    public AdapterCri(ArrayList<String> listadatos) {
+    public AdapterCri(ArrayList<Criterios> listadatos) {
         this.listadatos = listadatos;
     }
 
@@ -32,8 +35,18 @@ public class AdapterCri extends RecyclerView.Adapter<AdapterCri.Viewholder>{
     }
 
     @Override
-    public void onBindViewHolder( AdapterCri.Viewholder viewholder, int position) {
-        viewholder.asignarDatos(listadatos.get(position));
+    public void onBindViewHolder(final AdapterCri.Viewholder viewholder, int position) {
+        viewholder.mformcriterio.setText( listadatos.get( position ).getTexto() );
+        viewholder.mbtningresarcriterios.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mDatabase.child( "Criterios" ).child( "Criterios N°"+ x++ ).child( "texto" ).setValue((viewholder.mformcriterio.getText().toString().trim()) );
+                viewholder.mformcriterio.setEnabled( false );
+                viewholder.mbtningresarcriterios.setEnabled( false );
+
+            }
+        } );
     }
 
     @Override
@@ -54,26 +67,9 @@ public class AdapterCri extends RecyclerView.Adapter<AdapterCri.Viewholder>{
 
             mDatabase = FirebaseDatabase.getInstance().getReference();
 
-            mbtningresarcriterios.setOnClickListener( new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
 
-                    String item = mDatabase.child( "Criterio N°" + x++).getKey();
-                    String item2 = mDatabase.push().getKey();
-                    String criterio = mformcriterio.getText().toString();
-                    //mDatabase.child( "Criterios" ).child( "Criterio N°"+ x++ ).child( "texto" ).setValue( criterio );
-
-                    mDatabase.child( "Criterios" ).child( item  ).child( "texto" ).setValue( criterio );
-                    mbtningresarcriterios.setEnabled( false );
-                    mformcriterio.setEnabled( false );
-                }
-            } );
 
         }
 
-        public void asignarDatos(String s){
-            mbtningresarcriterios.setText(s);
-            mformcriterio.setText(s);
-        }
     }
 }
